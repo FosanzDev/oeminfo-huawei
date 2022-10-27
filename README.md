@@ -1,7 +1,7 @@
 ###  oeminfo-huawei
   
 - Used to modify the oeminfo file/storage region on Huawai devices which controls things like the model number and region
-- 2022 fork of https://github.com/Iceows/oeminfo-huawei deleting symlinks (and adding region change function / In development)
+- 2022 fork of https://github.com/Iceows/oeminfo-huawei deleting symlinks (Not necessary for Windows)
 - 2021 fork of https://github.com/penn5/oeminfo-huawei fixing bugs in the pack function and adding a usage examples.
 - Original code from https://forum.xda-developers.com/p9-plus/how-to/mod-oeminfo-structure-t3446382
 

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3.7
 #OEMINFO tool
 #rysmario 2016
 #   hackish tool to "unpack" a oeminfo from huawei
@@ -34,8 +33,6 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import sys, os, argparse
-import zipfile
-import tempfile
 from struct import *
 
 regions = [
@@ -69,6 +66,7 @@ elements = {6:
     0x73:"Oeminfo Gamma", # From fastboot, but who knows what it actually is, has to do with hisifb_write_gm_to_reserved_mem and the display panel
     0x76:"pos_delivery constant",
     0x8b:"Unknown SHA256 1",
+    0x81:"Brand + model",
     0x85:"3rd_recovery constant",
     0x8c:"Software Version as CSV",
     0x8d:"Unknown SHA256 2",
@@ -164,7 +162,8 @@ def unpackOEM(f, outdir=None):
                 with open(os.path.join(outdir, fileout+".bin"), "wb") as f:
                     f.write(binary[content_startbyte+0x200:content_startbyte+0x200+data_len])
                 
-                #No symlinking due to permission errors. Not necessary for me
+                # No symlinking due to permission errors. Not necessary for me
+                # elements dict and element function is not necessary if this is not used
                 #if element(version, id):
                 #    os.symlink(fileout+".bin", os.path.join(outdir, element(version, id)+"."+hex(content_startbyte)))
                 #if (version == 6 and type == 0x1fa5) or (version == 8 and (type == 0x2399 or type == 0x1fa5)):
