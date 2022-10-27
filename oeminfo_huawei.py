@@ -38,6 +38,15 @@ import zipfile
 import tempfile
 from struct import *
 
+regions = [
+    "C00"   #China
+    "C635"  #Japan
+    "C432"  #Europe
+    "C567"  #USA
+    "C605"  #LatAm  
+
+]
+
 elements = {6:
   {
     0x12:"Region",
@@ -104,12 +113,7 @@ def element(version, key):
         returnvalue="" #hex(key)
     return returnvalue
 
-def unzip(filename):
-    tempdir=tempfile.gettempdir()
-    zip_ref = zipfile.ZipFile(filename, 'r')
-    zip_ref.extract("oeminfo",tempdir)
-    zip_ref.close()
-    return os.path.join(tempdir, "oeminfo")
+#Unzip function deleted as wasn't used
 
 def unpackOEM(f, outdir=None):
     # added feature for 2 iterations so we learn what oeminfo this is and act accordingly
@@ -159,11 +163,13 @@ def unpackOEM(f, outdir=None):
                 print("hdr:{:<8} age:{:3x} id:{:5x} {} ".format(header.decode('utf-8'), age, id, element(version, id)))
                 with open(os.path.join(outdir, fileout+".bin"), "wb") as f:
                     f.write(binary[content_startbyte+0x200:content_startbyte+0x200+data_len])
-                if element(version, id):
-                    os.symlink(fileout+".bin", os.path.join(outdir, element(version, id)+"."+hex(content_startbyte)))
-                if (version == 6 and type == 0x1fa5) or (version == 8 and (type == 0x2399 or type == 0x1fa5)):
-                    if element(version, id):
-                        os.symlink(fileout+".bin", os.path.join(outdir, element(version, id)+"."+hex(content_startbyte)+".bmp"))
+                
+                #No symlinking due to permission errors. Not necessary for me
+                #if element(version, id):
+                #    os.symlink(fileout+".bin", os.path.join(outdir, element(version, id)+"."+hex(content_startbyte)))
+                #if (version == 6 and type == 0x1fa5) or (version == 8 and (type == 0x2399 or type == 0x1fa5)):
+                #    if element(version, id):
+                #       os.symlink(fileout+".bin", os.path.join(outdir, element(version, id)+"."+hex(content_startbyte)+".bmp"))
         #forward another 0x400 bytes for upcoming "oem_info"
         content_startbyte+=0x400;
     #return directory name
@@ -353,4 +359,3 @@ def main(argv):
 
 if __name__ == "__main__":
    main(sys.argv)
-
