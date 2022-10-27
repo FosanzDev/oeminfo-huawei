@@ -1,6 +1,7 @@
 ###  oeminfo-huawei
   
 - Used to modify the oeminfo file/storage region on Huawai devices which controls things like the model number and region
+- 2022 fork of https://github.com/Iceows/oeminfo-huawei deleting symlinks (and adding region change function / In development)
 - 2021 fork of https://github.com/penn5/oeminfo-huawei fixing bugs in the pack function and adding a usage examples.
 - Original code from https://forum.xda-developers.com/p9-plus/how-to/mod-oeminfo-structure-t3446382
 
@@ -38,7 +39,7 @@ hdr:OEM_INFO age:  5 id:   43 Root Type (info)
 CMR-W09#hw-usa#CMR-W09 8.0.0.200(C567)
 ```
 
-- Edit files within the CMR-W09#hw-usa#CMR-W09 8.0.0.200(C567) directory to change the region using a hex editor like GHex
+- Edit files within the CMR-W09#hw-usa#CMR-W09 8.0.0.200(C567) directory to change the region using a hex editor like GHex (Hexplorer for Win users)
 
 ```shell
 user@ubuntu:~/oem_info$ python3 oeminfo_huawei.py pack -i CMR-W09#hw-usa#CMR-W09\ 8.0.0.200\(C567\)/ -o ./test2.img
